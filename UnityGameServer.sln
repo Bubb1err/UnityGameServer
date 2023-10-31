@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameServer", "UnityGameServer\UnityGameServer.csproj", "{4308C06B-401C-42BD-A519-0B17BA8E8354}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientExample", "ClientExample\ClientExample.csproj", "{97CD6C54-C12B-4418-B30D-5C72B4D1D496}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4308C06B-401C-42BD-A519-0B17BA8E8354}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4308C06B-401C-42BD-A519-0B17BA8E8354}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4308C06B-401C-42BD-A519-0B17BA8E8354}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4308C06B-401C-42BD-A519-0B17BA8E8354}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {859A95C2-7BE3-4642-814A-7CFD8FBAE4AA}
+	EndGlobalSection
+EndGlobal
