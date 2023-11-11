@@ -12,6 +12,7 @@ namespace UnityGameServer.Hubs
         Task GameStart(string gameId);
         Task GameStop();
         Task Updated(string player);
+        Task GameplayEventHandler(string type, string data);
     }
 
     public class GameHub : Hub<IGameClient>
@@ -89,6 +90,10 @@ namespace UnityGameServer.Hubs
                 await _playerRepository.SaveAsync();
                 await Clients.Group(player.GameId).Updated(JsonSerializer.Serialize<Player>(player));
             }
+        }
+        public async Task ServerGameplayEventHandler(string gameID,string type, string data)
+        {
+            await Clients.Group(gameID).GameplayEventHandler(type, data);
         }
     }
 
