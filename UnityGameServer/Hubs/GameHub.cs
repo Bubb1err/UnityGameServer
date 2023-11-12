@@ -9,7 +9,7 @@ namespace UnityGameServer.Hubs
 {
     public interface IGameClient
     {
-        Task GameStart(string gameId);
+        Task GameStart(string data);
         Task GameStop();
         Task Updated(string player);
         Task GameplayEventHandler(string type, string data);
@@ -21,7 +21,7 @@ namespace UnityGameServer.Hubs
         private readonly IRepository<Player> _playerRepository;
         private readonly ApplicationDbContext _context;
         private readonly GameClient _gameClient;
-        private static int _maxPlayersCount = 4;
+        private static int _maxPlayersCount = 2;
         public GameHub(IRepository<Game> gameRepository,
             IRepository<Player> playerRepository, ApplicationDbContext context, GameClient gameClient )
         {
@@ -37,6 +37,7 @@ namespace UnityGameServer.Hubs
                 _gameClient.mutex.WaitOne();
 
                 var game = _context.Games.Include(g => g.Players).FirstOrDefault(g => !g.InProgress);
+
                 if (game == null)
                 {
                     game = new Game();
@@ -69,7 +70,9 @@ namespace UnityGameServer.Hubs
                 _context.SaveChanges();
                 if (game.InProgress)
                 {
-                   await Clients.Group(game.Id).GameStart(game.Id);                 
+                    GameStartData gameStartData = new GameStartData(game.Id, Context.ConnectionId);
+                   var dataToSend= JsonSerializer.Serialize<GameStartData>(gameStartData);
+                   await Clients.Group(game.Id).GameStart(dataToSend);                 
                 }
                 
                 _gameClient.mutex.ReleaseMutex();
@@ -94,6 +97,18 @@ namespace UnityGameServer.Hubs
         public async Task ServerGameplayEventHandler(string gameID,string type, string data)
         {
             await Clients.Group(gameID).GameplayEventHandler(type, data);
+        }
+
+        [Serializable]
+        public class GameStartData
+        {
+            public string GameID { get; set; }
+            public string PlayerID { get; set; }
+            public GameStartData(string gameID, string playerID)
+            {
+                GameID = gameID;
+                PlayerID = playerID;
+            }
         }
     }
 
