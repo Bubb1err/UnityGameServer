@@ -8,5 +8,6 @@
         public string? ConnectionId { get; set; }
         public string GameId { get; set; }
         public Game Game { get; set; }
+        public int RoomId { get; set; }
     }
 }

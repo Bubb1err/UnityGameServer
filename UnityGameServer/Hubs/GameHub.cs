@@ -9,7 +9,7 @@ namespace UnityGameServer.Hubs
 {
     public interface IGameClient
     {
-        Task GameStart(string data);
+        Task RoomFilled(string data);
         Task GameStop();
         Task Updated(string player);
         Task GameplayEventHandler(string type, string data);
@@ -45,6 +45,7 @@ namespace UnityGameServer.Hubs
                     {
                         ConnectionId = Context.ConnectionId,
                         GameId = game.Id,
+                        RoomId = game.Players.Count
                     };
                     game.Players.Add(player);
                     _context.Games.Add(game);
@@ -56,7 +57,8 @@ namespace UnityGameServer.Hubs
                     var player = new Player
                     {
                         ConnectionId = Context.ConnectionId,
-                        GameId = game.Id
+                        GameId = game.Id,
+                        RoomId = game.Players.Count
                     };
                     game.Players.Add(player);
                     _context.Players.Add(player);
@@ -70,9 +72,12 @@ namespace UnityGameServer.Hubs
                 _context.SaveChanges();
                 if (game.InProgress)
                 {
-                    GameStartData gameStartData = new GameStartData(game.Id, Context.ConnectionId);
+                    GameStartData gameStartData = 
+                        new GameStartData(game.Id, game.Players
+                            .Select(player => new PlayerInfoData {RoomId = player.RoomId, UserId = player.Id})
+                            .ToList());
                    var dataToSend= JsonSerializer.Serialize<GameStartData>(gameStartData);
-                   await Clients.Group(game.Id).GameStart(dataToSend);                 
+                   await Clients.Group(game.Id).RoomFilled(dataToSend);                 
                 }
                 
                 _gameClient.mutex.ReleaseMutex();
@@ -99,16 +104,21 @@ namespace UnityGameServer.Hubs
             await Clients.Group(gameID).GameplayEventHandler(type, data);
         }
 
-        [Serializable]
         public class GameStartData
         {
             public string GameID { get; set; }
-            public string PlayerID { get; set; }
-            public GameStartData(string gameID, string playerID)
+            public List<PlayerInfoData> PlayersInfoData { get; set; }
+            public GameStartData(string gameID, List<PlayerInfoData> playersInfoData) 
             {
                 GameID = gameID;
-                PlayerID = playerID;
+                PlayersInfoData = playersInfoData;
             }
+        }
+
+        public class PlayerInfoData
+        {
+            public int UserId { get; set; }
+            public int RoomId { get; set; }
         }
     }
 
