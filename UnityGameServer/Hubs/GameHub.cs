@@ -22,7 +22,7 @@ namespace UnityGameServer.Hubs
         private readonly IRepository<Player> _playerRepository;
         private readonly ApplicationDbContext _context;
         private readonly GameClient _gameClient;
-        private static int _maxPlayersCount = 2;
+        private static int _maxPlayersCount = 4;
         public GameHub(IRepository<Game> gameRepository,
             IRepository<Player> playerRepository, ApplicationDbContext context, GameClient gameClient )
         {
@@ -67,7 +67,7 @@ namespace UnityGameServer.Hubs
                     _context.Players.Add(player);
                 }
                 await Groups.AddToGroupAsync(Context.ConnectionId, game.Id);
-                await Clients.User(Context.ConnectionId).Connected(playerRoomId);
+                await Clients.Client(Context.ConnectionId).Connected(playerRoomId);
                 await base.OnConnectedAsync();
                 if (game.Players.Count == _maxPlayersCount)
                 {
