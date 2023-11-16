@@ -13,6 +13,7 @@ namespace UnityGameServer.Hubs
         Task GameStop();
         Task Updated(string player);
         Task GameplayEventHandler(string type, string data);
+        Task Connected(int playerRoomId);
     }
 
     public class GameHub : Hub<IGameClient>
@@ -37,7 +38,7 @@ namespace UnityGameServer.Hubs
                 _gameClient.mutex.WaitOne();
 
                 var game = _context.Games.Include(g => g.Players).FirstOrDefault(g => !g.InProgress);
-
+                int playerRoomId = -1;
                 if (game == null)
                 {
                     game = new Game();
@@ -47,6 +48,7 @@ namespace UnityGameServer.Hubs
                         GameId = game.Id,
                         RoomId = game.Players.Count
                     };
+                    playerRoomId = player.RoomId;
                     game.Players.Add(player);
                     _context.Games.Add(game);
                     _context.Players.Add(player);
@@ -60,10 +62,12 @@ namespace UnityGameServer.Hubs
                         GameId = game.Id,
                         RoomId = game.Players.Count
                     };
+                    playerRoomId = player.RoomId;
                     game.Players.Add(player);
                     _context.Players.Add(player);
                 }
                 await Groups.AddToGroupAsync(Context.ConnectionId, game.Id);
+                await Clients.User(Context.ConnectionId).Connected(playerRoomId);
                 await base.OnConnectedAsync();
                 if (game.Players.Count == _maxPlayersCount)
                 {
