@@ -12,7 +12,7 @@ namespace UnityGameServer.Hubs
         Task RoomFilled(string data);
         Task GameStop();
         Task Updated(string player);
-        Task GameplayEventHandler(string type, string data);
+        Task GameplayEventHandler(string type, string data, string dataType);
         Task Connected(int playerRoomId);
     }
 
@@ -103,9 +103,9 @@ namespace UnityGameServer.Hubs
                 await Clients.Group(player.GameId).Updated(JsonSerializer.Serialize<Player>(player));
             }
         }
-        public async Task ServerGameplayEventHandler(string gameID,string type, string data)
+        public async Task ServerGameplayEventHandler(string gameID,string type, string data, string dataType)
         {
-            await Clients.Group(gameID).GameplayEventHandler(type, data);
+            await Clients.Group(gameID).GameplayEventHandler(type, data, dataType);
         }
 
         public class GameStartData
