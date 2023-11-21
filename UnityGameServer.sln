@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameServer", "UnityGameServer\UnityGameServer.csproj", "{4308C06B-401C-42BD-A519-0B17BA8E8354}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnityGameServer", "UnityGameServer\UnityGameServer.csproj", "{4308C06B-401C-42BD-A519-0B17BA8E8354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientExample", "ClientExample\ClientExample.csproj", "{97CD6C54-C12B-4418-B30D-5C72B4D1D496}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientExample", "ClientExample\ClientExample.csproj", "{97CD6C54-C12B-4418-B30D-5C72B4D1D496}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameServer.Data", "UnityGameServer.Data\UnityGameServer.Data.csproj", "{91ACF364-4BB2-4B62-8A93-40F4006C5788}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityGameServer.BLL", "UnityGameServer.BLL\UnityGameServer.BLL.csproj", "{406F1484-83CA-4590-B9ED-518C283871FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97CD6C54-C12B-4418-B30D-5C72B4D1D496}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91ACF364-4BB2-4B62-8A93-40F4006C5788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91ACF364-4BB2-4B62-8A93-40F4006C5788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91ACF364-4BB2-4B62-8A93-40F4006C5788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91ACF364-4BB2-4B62-8A93-40F4006C5788}.Release|Any CPU.Build.0 = Release|Any CPU
+		{406F1484-83CA-4590-B9ED-518C283871FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{406F1484-83CA-4590-B9ED-518C283871FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{406F1484-83CA-4590-B9ED-518C283871FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{406F1484-83CA-4590-B9ED-518C283871FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
