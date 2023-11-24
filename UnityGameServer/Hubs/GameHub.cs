@@ -14,6 +14,7 @@ namespace UnityGameServer.Hubs
         Task Updated(string player);
         Task GameplayEventHandler(string type, string data, string dataType);
         Task Connected(int playerRoomId);
+        Task PlayerConnected(int playerRoomId);
     }
 
     public class GameHub : Hub<IGameClient>
@@ -68,6 +69,7 @@ namespace UnityGameServer.Hubs
                 }
                 await Groups.AddToGroupAsync(Context.ConnectionId, game.Id);
                 await Clients.Client(Context.ConnectionId).Connected(playerRoomId);
+                await Clients.Group(game.Id).PlayerConnected(playerRoomId);
                 await base.OnConnectedAsync();
                 if (game.Players.Count == _maxPlayersCount)
                 {
